@@ -3,6 +3,7 @@ package interesting_tweets;
 /**
  * Created by jorge on 29/03/18.
  */
+import interesting_tweets.service.TweetProcessor;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -16,7 +17,6 @@ public class Application {
 
 
     static final String queueName = "tweet";
-
 
 
     @Bean

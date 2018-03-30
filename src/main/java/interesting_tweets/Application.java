@@ -3,7 +3,7 @@ package interesting_tweets;
 /**
  * Created by jorge on 29/03/18.
  */
-import interesting_tweets.service.TweetProcessor;
+import interesting_tweets.service.TweetProcessorTranslator;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -36,7 +36,7 @@ public class Application {
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(TweetProcessor receiver) {
+    MessageListenerAdapter listenerAdapter(TweetProcessorTranslator receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 

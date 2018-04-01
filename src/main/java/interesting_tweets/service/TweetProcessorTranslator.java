@@ -2,6 +2,7 @@ package interesting_tweets.service;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -30,6 +31,9 @@ public class TweetProcessorTranslator {
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
 
+    @Value( "${yandex.key}")
+    private String key;
+
 
 
     public void receiveMessage(String message) {
@@ -50,7 +54,7 @@ public class TweetProcessorTranslator {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
-        map.add("key", "trnsl.1.1.20180330T143614Z.5a2f59922e93252b.001d1c4d9a104d3e5096a5131bb039a39f433ba1");
+        map.add("key", key);
         map.add("text", texto);
         map.add("lang", "es");
 

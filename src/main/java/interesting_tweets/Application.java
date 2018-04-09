@@ -3,7 +3,8 @@ package interesting_tweets;
 /**
  * Created by jorge on 29/03/18.
  */
-import interesting_tweets.service.TweetProcessorTranslator;
+import interesting_tweets.listeners.OriginalListener;
+import interesting_tweets.listeners.TranslatorListener;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -16,29 +17,66 @@ import org.springframework.context.annotation.Bean;
 public class Application {
 
 
-    static final String queueName = "tweet";
+    static final String queue0Name = "tweet";
+    static final String queue1Name = "translation";
+
+
+
+    /**
+     * Configuración cola de original
+     */
+    @Bean
+    Queue originalQueue() {
+        return new Queue(queue0Name, false);
+    }
 
 
     @Bean
-    Queue queue() {
-        return new Queue(queueName, false);
+    SimpleMessageListenerContainer originalContainer(ConnectionFactory connectionFactory,
+                                             MessageListenerAdapter originalListenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queue0Name);
+        container.setMessageListener(originalListenerAdapter);
+        return container;
+    }
+
+
+    @Bean
+    MessageListenerAdapter originalListenerAdapter(OriginalListener receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
+
+
+
+
+
+    /**
+     * Configuración cola de traducción
+     */
+    @Bean
+    Queue translationQueue() {
+        return new Queue("translation", false);
     }
 
 
     @Bean
     SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                             MessageListenerAdapter listenerAdapter) {
+                                             MessageListenerAdapter translationListenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
+        container.setQueueNames(queue1Name);
+        container.setMessageListener(translationListenerAdapter);
         return container;
     }
 
+
     @Bean
-    MessageListenerAdapter listenerAdapter(TweetProcessorTranslator receiver) {
+    MessageListenerAdapter translationListenerAdapter(TranslatorListener receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
+
+
 
 
     public static void main(String[] args) throws InterruptedException {

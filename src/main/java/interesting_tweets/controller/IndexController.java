@@ -9,4 +9,9 @@ public class IndexController {
     public String greeting() {
         return "index";
     }
+
+    @RequestMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
 }

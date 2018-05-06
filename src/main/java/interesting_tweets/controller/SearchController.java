@@ -1,9 +1,6 @@
 package interesting_tweets.controller;
 
-import interesting_tweets.Keyword;
-import interesting_tweets.KeywordRepository;
-import interesting_tweets.Tweet;
-import interesting_tweets.TweetRepository;
+import interesting_tweets.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +20,36 @@ public class SearchController {
     @Autowired
     private KeywordRepository kr;
 
+    @Autowired
+    private LanguageRepository lr;
+
+
 
     /**
      * Servicio REST que devuelve todas las incidencias de la base de datos
      */
-    @PostMapping(value = "/words",produces = "application/json")
+    @PostMapping(value = "/language",produces = "application/json",consumes = "application/json")
+    public @ResponseBody String setLanguage(@RequestBody String message) {
+
+        JSONObject JSONMessage = new JSONObject(message);
+
+        String l = JSONMessage.getString("lang");
+
+        lr.deleteAll();
+
+
+        lr.save(new Language(l));
+
+
+        return "{ \"message\" : \"OK\"}";
+    }
+
+    /**
+     * Servicio REST que devuelve todas las incidencias de la base de datos
+     */
+    @PostMapping(value = "/words",produces = "application/json",consumes = "application/json")
     public @ResponseBody String setWords(@RequestBody String message) {
+
 
         JSONObject JSONMessage = new JSONObject(message);
 
@@ -41,6 +62,16 @@ public class SearchController {
         }
         return "{ \"message\" : \"OK\"}";
     }
+
+    /**
+     * Servicio REST que devuelve todas las incidencias de la base de datos
+     */
+    @GetMapping(value = "/words",produces = "application/json")
+    public @ResponseBody List<Keyword> getWords() {
+
+        return Lists.newArrayList(kr.findAll());
+    }
+
 
 
 

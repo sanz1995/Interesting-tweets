@@ -40,6 +40,7 @@ function registerStreaming() {
 
 
     $("#original").click(function(event){
+        console.log("original");
         disconnect();
         event.preventDefault();
         connect("/queue/original/");
@@ -71,6 +72,7 @@ function registerSearch() {
 
 
 $(document).ready(function() {
+    console.log("hola");
     registerTemplate()
 	registerSearch();
     registerStreaming();

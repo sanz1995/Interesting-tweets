@@ -23,6 +23,9 @@ public class SearchController {
     @Autowired
     private LanguageRepository lr;
 
+    @Autowired
+    private LanguageSelectionRepository lsr;
+
 
 
     /**
@@ -43,6 +46,28 @@ public class SearchController {
 
         return "{ \"message\" : \"OK\"}";
     }
+
+
+    @PostMapping(value = "/languageDefault",produces = "application/json",consumes = "application/json")
+    public @ResponseBody String setLanguageDefault(@RequestBody String message) {
+
+        JSONObject JSONMessage = new JSONObject(message);
+
+        String l = JSONMessage.getString("lang");
+
+        lsr.deleteAll();
+
+
+        lsr.save(new LanguageSelection(l));
+
+
+        return "{ \"message\" : \"OK\"}";
+    }
+
+
+
+
+
 
     /**
      * Servicio REST que devuelve todas las incidencias de la base de datos

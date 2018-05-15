@@ -49,7 +49,6 @@ function modificarLanguage(){
     var obj = '{'
         +'"lang" : ' + $("#sel1").val()
         +'}';
-
     $.ajax({
         type        :   'POST'  ,
         url         :   'language',
@@ -60,9 +59,24 @@ function modificarLanguage(){
 
         }
     });
-
 }
 
+function modificarLanguageDefault(){
+
+    var obj = '{'
+        +'"lang" : ' + $("#sel2").val()
+        +'}';
+    $.ajax({
+        type        :   'POST'  ,
+        url         :   'languageDefault',
+        data        :   obj,
+        contentType :   "application/json; charset=utf-8",
+        success     :   function(){
+            $("#success-alert").show();
+
+        }
+    });
+}
 
 
 function mostrar(){
@@ -89,11 +103,20 @@ function mostrar(){
 function showChooser(){
     $("#chooser").show();
     $("#trans").hide();
+    $("#distinguer").hide();
+
 }
 
 function showTranslator(){
     $("#chooser").hide();
     $("#trans").show();
+    $("#distinguer").hide();
+}
+
+function showLanguages(){
+    $("#chooser").hide();
+    $("#trans").hide();
+    $("#distinguer").show();
 }
 
 

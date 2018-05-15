@@ -47,7 +47,7 @@
                 <a class="nav-link" id="traduccion" onclick="showTranslator();" href="#">Traducción</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="distincion" onclick="showCountries();" href="#">Distinción</a>
+                <a class="nav-link" id="distincion" onclick="showLanguages();" href="#">Lenguajes</a>
             </li>
         </ul>
     </div>
@@ -75,7 +75,7 @@
 <div id="trans">
 
     <div class="form-group col-md-4 rightPanel">
-        <label for="sel1">Select list:</label>
+        <label for="sel1">Selecciona el idioma al que traducir los tweets:</label>
         <select class="form-control" id="sel1">
             <option value="en">Inglés</option>
             <option value="es">Español</option>
@@ -91,9 +91,28 @@
     <div class ="col-md-4 rightPanel">
         <button type="button" class="btn btn-primary" onclick="modificarLanguage();">Modificar</button>
     </div>
-
 </div>
 
+
+
+<div id="distinguer">
+
+
+    <div class="form-group col-md-4 rightPanel">
+        <label for="sel1">Selecciona el idioma a mostrar por defecto:</label>
+        <select class="form-control" id="sel2">
+            <option value="en">Inglés</option>
+            <option value="es">Español</option>
+            <option value="ca">Catalán</option>
+            <option value="fr">Francés</option>
+            <option value="de">Alemán</option>
+        </select>
+
+    </div>
+    <div class ="col-md-4 rightPanel">
+        <button type="button" class="btn btn-primary" onclick="modificarLanguageDefault();">Modificar</button>
+    </div>
+</div>
 
 
 

@@ -1,4 +1,4 @@
-package interesting_tweets.listeners.language;
+package political_tweets.listeners.language;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class SpanishListener {
+public class GermanListener {
 
 
     @Autowired
@@ -22,7 +22,7 @@ public class SpanishListener {
 
     public void receiveMessage(String message) {
 
-        messagingTemplate.convertAndSend("/queue/language/es",message);
+        messagingTemplate.convertAndSend("/queue/language/de",message);
 
     }
 }

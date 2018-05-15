@@ -1,4 +1,4 @@
-package interesting_tweets.config;
+package political_tweets.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

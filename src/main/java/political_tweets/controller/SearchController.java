@@ -1,6 +1,6 @@
-package interesting_tweets.controller;
+package political_tweets.controller;
 
-import interesting_tweets.*;
+import political_tweets.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

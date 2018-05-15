@@ -1,12 +1,11 @@
-package interesting_tweets;
+package political_tweets;
 
 /**
  * Created by jorge on 29/03/18.
  */
-import interesting_tweets.listeners.OriginalListener;
-import interesting_tweets.listeners.TranslatorListener;
-import interesting_tweets.listeners.language.EnglishListener;
-import interesting_tweets.listeners.language.SpanishListener;
+import political_tweets.listeners.OriginalListener;
+import political_tweets.listeners.TranslatorListener;
+import political_tweets.listeners.language.*;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -108,7 +107,86 @@ public class Application {
 
 
     /**
-     * Configuración cola en ingles
+     * Configuración cola en aleman
+     */
+    @Bean
+    Queue germanQueue() {
+        return new Queue(queue2Name+"/de", false);
+    }
+
+
+    @Bean
+    SimpleMessageListenerContainer germanContainer(ConnectionFactory connectionFactory,
+                                                    MessageListenerAdapter germanListenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queue2Name+"/de");
+        container.setMessageListener(germanListenerAdapter);
+        return container;
+    }
+
+
+    @Bean
+    MessageListenerAdapter germanListenerAdapter(GermanListener receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
+
+
+    /**
+     * Configuración cola en  catalan
+     */
+    @Bean
+    Queue catalanQueue() {
+        return new Queue(queue2Name+"/ca", false);
+    }
+
+
+    @Bean
+    SimpleMessageListenerContainer catalanContainer(ConnectionFactory connectionFactory,
+                                                    MessageListenerAdapter catalanListenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queue2Name+"/ca");
+        container.setMessageListener(catalanListenerAdapter);
+        return container;
+    }
+
+
+    @Bean
+    MessageListenerAdapter catalanListenerAdapter(CatalanListener receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
+
+
+
+    /**
+     * Configuración cola en frances
+     */
+    @Bean
+    Queue frenchQueue() {
+        return new Queue(queue2Name+"/fr", false);
+    }
+
+
+    @Bean
+    SimpleMessageListenerContainer frenchContainer(ConnectionFactory connectionFactory,
+                                                    MessageListenerAdapter frenchListenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queue2Name+"/fr");
+        container.setMessageListener(frenchListenerAdapter);
+        return container;
+    }
+
+
+    @Bean
+    MessageListenerAdapter frenchListenerAdapter(FrenchListener receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
+
+
+    /**
+     * Configuración cola en aleman
      */
     @Bean
     Queue englishQueue() {
@@ -132,6 +210,31 @@ public class Application {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
+
+    /**
+     * Configuración cola por defecto
+     */
+    @Bean
+    Queue defaultQueue() {
+        return new Queue(queue2Name+"/default", false);
+    }
+
+
+    @Bean
+    SimpleMessageListenerContainer defaultContainer(ConnectionFactory connectionFactory,
+                                                    MessageListenerAdapter defaultListenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queue2Name+"/default");
+        container.setMessageListener(defaultListenerAdapter);
+        return container;
+    }
+
+
+    @Bean
+    MessageListenerAdapter defaultListenerAdapter(DefaultListener receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
 
 
 

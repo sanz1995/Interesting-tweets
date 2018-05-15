@@ -1,4 +1,4 @@
-package interesting_tweets.controller;
+package political_tweets.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

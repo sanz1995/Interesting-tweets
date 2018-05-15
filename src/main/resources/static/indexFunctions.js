@@ -50,7 +50,9 @@ function registerStreaming() {
 
     $("#lenguaje").click(function(event){
         $("#sel1").show();
-        languaje();
+        disconnect();
+        event.preventDefault();
+        connect("/queue/language/default");
     });
 }
 

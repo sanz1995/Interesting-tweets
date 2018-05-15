@@ -1,4 +1,4 @@
-package interesting_tweets;
+package political_tweets;
 
 import org.springframework.data.repository.CrudRepository;
 

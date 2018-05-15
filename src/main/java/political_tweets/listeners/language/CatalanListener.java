@@ -1,11 +1,19 @@
-package interesting_tweets.listeners;
+package political_tweets.listeners.language;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * Created by jorge on 29/03/18.
+ *
+ *
+ */
+
+
 @Component
-public class OriginalListener {
+public class CatalanListener {
 
 
     @Autowired
@@ -14,7 +22,7 @@ public class OriginalListener {
 
     public void receiveMessage(String message) {
 
-        messagingTemplate.convertAndSend("/queue/original/",message);
+        messagingTemplate.convertAndSend("/queue/language/ca",message);
 
     }
 }

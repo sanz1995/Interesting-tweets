@@ -99,14 +99,22 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" id="original" href="#">Original <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" id="original" href="#">Originales <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="traduccion" href="#">Traduccion</a>
+                            <a class="nav-link" id="traduccion" href="#">Traducciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="lenguaje" href="#">Lenguajes</a>
                         </li>
                     </ul>
                 </div>
             </nav>
+
+            <select class="form-control" id="sel1" onchange="languaje();">
+                <option value="en">Inglés</option>
+                <option value="es">Español</option>
+            </select>
 
             <!--Resultados-->
             <div class="container-fluid" id="resultsBlock">

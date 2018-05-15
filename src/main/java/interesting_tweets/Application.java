@@ -5,6 +5,8 @@ package interesting_tweets;
  */
 import interesting_tweets.listeners.OriginalListener;
 import interesting_tweets.listeners.TranslatorListener;
+import interesting_tweets.listeners.language.EnglishListener;
+import interesting_tweets.listeners.language.SpanishListener;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -19,6 +21,7 @@ public class Application {
 
     static final String queue0Name = "tweet";
     static final String queue1Name = "translation";
+    static final String queue2Name = "language";
 
 
 
@@ -75,6 +78,63 @@ public class Application {
     MessageListenerAdapter translationListenerAdapter(TranslatorListener receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
+
+
+
+    /**
+     * Configuración cola en español
+     */
+    @Bean
+    Queue spanishQueue() {
+        return new Queue(queue2Name+"/es", false);
+    }
+
+
+    @Bean
+    SimpleMessageListenerContainer spanishContainer(ConnectionFactory connectionFactory,
+                                             MessageListenerAdapter spanishListenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queue2Name+"/es");
+        container.setMessageListener(spanishListenerAdapter);
+        return container;
+    }
+
+
+    @Bean
+    MessageListenerAdapter spanishListenerAdapter(SpanishListener receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
+
+
+    /**
+     * Configuración cola en ingles
+     */
+    @Bean
+    Queue englishQueue() {
+        return new Queue(queue2Name+"/en", false);
+    }
+
+
+    @Bean
+    SimpleMessageListenerContainer englishContainer(ConnectionFactory connectionFactory,
+                                                    MessageListenerAdapter englishListenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(queue2Name+"/en");
+        container.setMessageListener(englishListenerAdapter);
+        return container;
+    }
+
+
+    @Bean
+    MessageListenerAdapter englishListenerAdapter(EnglishListener receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
+
+
+
+
 
 
 

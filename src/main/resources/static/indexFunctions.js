@@ -32,6 +32,7 @@ function registerTemplate() {
 
 function registerStreaming() {
     $("#traduccion").click(function(event){
+        $("#sel1").hide();
         disconnect();
         event.preventDefault();
         connect("/queue/translation/");
@@ -40,12 +41,23 @@ function registerStreaming() {
 
 
     $("#original").click(function(event){
-        console.log("original");
+        $("#sel1").hide();
         disconnect();
         event.preventDefault();
         connect("/queue/original/");
 
     });
+
+    $("#lenguaje").click(function(event){
+        $("#sel1").show();
+        languaje();
+    });
+}
+
+function languaje(){
+    disconnect();
+    event.preventDefault();
+    connect("/queue/language/"+$("#sel1").val());
 }
 
 
@@ -58,7 +70,6 @@ function registerSearch() {
         $.get("tweets",{})
             .done( function(data) {
                 $("#resultsSearch").empty();
-                console.log("vaciado");
 
                 data.forEach(function(element) {
                     $("#resultsSearch").prepend(Mustache.render(template, element));
@@ -72,7 +83,7 @@ function registerSearch() {
 
 
 $(document).ready(function() {
-    console.log("hola");
+    $("#sel1").hide();
     registerTemplate()
 	registerSearch();
     registerStreaming();

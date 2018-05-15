@@ -83,6 +83,9 @@ function mostrar(){
 }
 
 
+
+
+
 function showChooser(){
     $("#chooser").show();
     $("#trans").hide();

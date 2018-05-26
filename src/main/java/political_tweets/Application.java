@@ -5,7 +5,9 @@ package political_tweets;
  */
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -25,7 +27,8 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 //@EnableOAuth2Sso
 @EnableResourceServer
-@EnableOAuth2Client
+@EnableAuthorizationServer
+//@EnableOAuth2Client
 public class Application extends WebSecurityConfigurerAdapter {
 
 
@@ -247,10 +250,10 @@ public class Application extends WebSecurityConfigurerAdapter {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
-
-    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
+    @Bean(name="authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
 

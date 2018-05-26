@@ -7,26 +7,34 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextListener;
 
 
-
-@EnableOAuth2Client
+@Component
+//@EnableOAuth2Client
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 //@Order(1000)
-//@Order(1)
+@Order(-20)
+//@Order(-20)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     //@Autowired
     //private static ClientDetailsService clientDetailsService;
@@ -45,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .password("user")
                 .roles("USER");
     }*/
-/*
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/webjars/**", "/images/**", "/oauth/uncache_approvals", "/oauth/cache_approvals");
@@ -57,7 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
+/*
     @Bean
     public static TokenStore tokenStore() {
         return new InMemoryTokenStore();
@@ -106,21 +114,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(final HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) throws Exception {
+        //http.antMatcher("/**").authorizeRequests()
+          //      .antMatchers("/admin**").hasAuthority("ROLE_ADMIN");
         http
-                .httpBasic()
-                .and()
+                .httpBasic().disable();
+                 http.formLogin().and()
+                .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().permitAll();
+
+                /*.formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll().and()
         //http.requestMatchers()
                 //.antMatchers("/login", "/oauth/authorize, /index")
                 //.and()
                 .authorizeRequests()
-                //.antMatchers("/index").hasRole("USER")
+                .antMatchers("/index").permitAll()
                 .anyRequest().hasAuthority("ROLE_ADMIN")
                 .and()
                 .formLogin().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/accessDenied.jsp");
+                .exceptionHandling().accessDeniedPage("/accessDenied.jsp")*/;
     }
+
+
 
     //@RequestMapping("/admin")
     //public Principal user(Principal principal) {
@@ -128,14 +144,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     //}
 
 
-    @Bean
-    public RequestContextListener requestContextListener(){
-        return new RequestContextListener();
-    }
+   // @Bean
+    //public RequestContextListener requestContextListener(){
+       // return new RequestContextListener();
+    //}
 
-    @Bean(name="authenticationManagerBean")
+    /*@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+        //return super.authenticationManagerBean();
+        return authenticationManager;
+    }*/
+
+    /*@Autowired
+    public void CustomWebSecurityConfigurerAdapter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
     }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.parentAuthenticationManager(authenticationManager);
+    }*/
 }

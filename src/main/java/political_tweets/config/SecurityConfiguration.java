@@ -119,8 +119,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
           //      .antMatchers("/admin**").hasAuthority("ROLE_ADMIN");
         http
                 .httpBasic().disable();
+        http
+                .csrf().disable();
                  http.formLogin().and()
-                .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
+                //.authorizeRequests().antMatchers("/admin/", "/words/","/language/").hasRole("ADMIN")
+                 .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").and()
+                 .authorizeRequests().antMatchers("/words/**").hasRole("ADMIN").and()
+                 .authorizeRequests().antMatchers("/language/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
 
                 /*.formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll().and()

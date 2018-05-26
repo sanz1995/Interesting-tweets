@@ -1,6 +1,8 @@
 
 var stompClient = null;
 var subs = null;
+var index = 1;
+
 
 function connect(name) {
     var socket = new SockJS('/twitter');
@@ -69,9 +71,10 @@ function registerSearch() {
         event.preventDefault();
         var target = $(this).attr('action');
         var query = $("#q").val();
-        $.get("tweets",{})
+        $.get("tweets/"+index,{})
             .done( function(data) {
                 $("#resultsSearch").empty();
+                index++;
 
                 data.forEach(function(element) {
                     $("#resultsSearch").prepend(Mustache.render(template, element));

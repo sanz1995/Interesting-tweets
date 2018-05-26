@@ -1,12 +1,13 @@
 package political_tweets.controller;
 
-import political_tweets.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.common.collect.Lists;
+import political_tweets.model.*;
 
 import java.util.List;
 
@@ -103,10 +104,12 @@ public class SearchController {
     /**
      * Servicio REST que devuelve todas las incidencias de la base de datos
      */
-    @GetMapping(value = "/tweets",produces = "application/json")
-    public @ResponseBody List<Tweet> getTweets() {
+    @GetMapping(value = "/tweets/{pag:.*}",produces = "application/json")
+    public @ResponseBody List<Tweet> getTweets(@PathVariable String pag) {
 
-        return Lists.newArrayList(tr.findAll());
+
+        int pagina = Integer.parseInt(pag);
+        return Lists.newArrayList(tr.findAll(new PageRequest(pagina, 20)));
     }
 
 

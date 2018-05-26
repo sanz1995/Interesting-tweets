@@ -1,4 +1,4 @@
-package political_tweets;
+package political_tweets.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

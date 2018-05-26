@@ -3,6 +3,15 @@ package political_tweets;
 /**
  * Created by jorge on 29/03/18.
  */
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import political_tweets.listeners.OriginalListener;
 import political_tweets.listeners.TranslatorListener;
 import political_tweets.listeners.language.*;
@@ -14,8 +23,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+//@EnableAutoConfiguration
 @SpringBootApplication
-public class Application {
+//@EnableOAuth2Sso
+@EnableResourceServer
+@EnableAuthorizationServer
+//@EnableOAuth2Client
+public class Application extends WebSecurityConfigurerAdapter {
 
 
     static final String queue0Name = "tweet";
@@ -236,10 +250,11 @@ public class Application {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
-
-
-
-
+    @Bean(name="authenticationManager")
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
 
     public static void main(String[] args) throws InterruptedException {

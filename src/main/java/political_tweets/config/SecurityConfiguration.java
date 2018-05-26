@@ -125,6 +125,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.authorizeRequests().antMatchers("/admin/", "/words/","/language/").hasRole("ADMIN")
                  .authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN").and()
                  .authorizeRequests().antMatchers("/words/**").hasRole("ADMIN").and()
+                 .authorizeRequests().antMatchers("/languageDefault/**").hasRole("ADMIN").and()
                  .authorizeRequests().antMatchers("/language/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
 

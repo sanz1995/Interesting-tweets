@@ -104,6 +104,7 @@ function showChooser(){
     $("#chooser").show();
     $("#trans").hide();
     $("#distinguer").hide();
+    $("#success-alert").hide();
 
 }
 
@@ -111,12 +112,14 @@ function showTranslator(){
     $("#chooser").hide();
     $("#trans").show();
     $("#distinguer").hide();
+    $("#success-alert").hide();
 }
 
 function showLanguages(){
     $("#chooser").hide();
     $("#trans").hide();
     $("#distinguer").show();
+    $("#success-alert").hide();
 }
 
 

@@ -29,7 +29,7 @@ function modificarKeyword(){
 
 
     $.ajax({
-        type        :   'POST'  ,
+        type        :   'PUT'  ,
         url         :   'words',
         data        :   obj,
         contentType :   "application/json; charset=utf-8",
@@ -50,7 +50,7 @@ function modificarLanguage(){
         +'"lang" : ' + $("#sel1").val()
         +'}';
     $.ajax({
-        type        :   'POST'  ,
+        type        :   'PUT'  ,
         url         :   'language',
         data        :   obj,
         contentType :   "application/json; charset=utf-8",
@@ -67,7 +67,7 @@ function modificarLanguageDefault(){
         +'"lang" : ' + $("#sel2").val()
         +'}';
     $.ajax({
-        type        :   'POST'  ,
+        type        :   'PUT'  ,
         url         :   'languageDefault',
         data        :   obj,
         contentType :   "application/json; charset=utf-8",

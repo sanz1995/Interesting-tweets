@@ -1,4 +1,4 @@
-package political_tweets.config;
+package political_tweets.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -28,11 +28,7 @@ public class SearchController {
     private LanguageSelectionRepository lsr;
 
 
-
-    /**
-     * Servicio REST que devuelve todas las incidencias de la base de datos
-     */
-    @PostMapping(value = "/language",produces = "application/json",consumes = "application/json")
+    @PutMapping(value = "/language",produces = "application/json",consumes = "application/json")
     public @ResponseBody String setLanguage(@RequestBody String message) {
 
         JSONObject JSONMessage = new JSONObject(message);
@@ -49,7 +45,7 @@ public class SearchController {
     }
 
 
-    @PostMapping(value = "/languageDefault",produces = "application/json",consumes = "application/json")
+    @PutMapping(value = "/languageDefault",produces = "application/json",consumes = "application/json")
     public @ResponseBody String setLanguageDefault(@RequestBody String message) {
 
         JSONObject JSONMessage = new JSONObject(message);
@@ -69,11 +65,7 @@ public class SearchController {
 
 
 
-
-    /**
-     * Servicio REST que devuelve todas las incidencias de la base de datos
-     */
-    @PostMapping(value = "/words",produces = "application/json",consumes = "application/json")
+    @PutMapping(value = "/words",produces = "application/json",consumes = "application/json")
     public @ResponseBody String setWords(@RequestBody String message) {
 
 
@@ -89,9 +81,7 @@ public class SearchController {
         return "{ \"message\" : \"OK\"}";
     }
 
-    /**
-     * Servicio REST que devuelve todas las incidencias de la base de datos
-     */
+
     @GetMapping(value = "/words",produces = "application/json")
     public @ResponseBody List<Keyword> getWords() {
 

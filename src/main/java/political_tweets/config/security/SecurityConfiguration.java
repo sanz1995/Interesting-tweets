@@ -1,6 +1,7 @@
-package political_tweets.config;
+package political_tweets.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+
+    @Value( "${admin.name}")
+    private String name;
+
+    @Value( "${admin.password}")
+    private String password;
 
 
     //@Autowired
@@ -110,7 +118,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .inMemoryAuthentication()
                 .withUser("user").password("user").roles("USER")
                 .and()
-                .withUser("admin").password("admin").roles("ADMIN");
+                .withUser(name).password(password).roles("ADMIN");
     }
 
     @Override

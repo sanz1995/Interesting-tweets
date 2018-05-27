@@ -1,4 +1,4 @@
-package political_tweets.config;
+package political_tweets.config.security;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
